@@ -1,0 +1,18 @@
+Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*"
+, bgColor = "black"
+, fgColor = "grey"
+, position = TopW L 90
+, commands = [ Run Weather "SBSP" ["-t","<station>: <tempC>C","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 36000
+             , Run MultiCpu ["-t","<total0>% <total1>% <total2>% <total3>%","-L","3","-H","50","--normal","green","--high","red"] 10
+             , Run CoreTemp ["-t","<core0>°C","-L","70","-H","80","-l","darkgreen","-n","darkorange","-h","darkred"] 50
+             , Run Memory ["-t","Mem: <usedratio>%"] 10
+             , Run BatteryP ["BAT0"]["-t","<acstatus>","-L","10","-H","80","-l","red","-h","green","--","-O","Charging","-o","Battery: <left>%"] 10
+             , Run Network "wlan0" ["-L","0","-H","32","--normal","yellow","--high","green","--low","red","-t","Down: <rx>kb Up:<tx>kb"] 10
+             , Run Wireless "wlan0" ["-L","40","-H","70","--normal","yellow","--high","green","--low","red","-t","<essid>(<quality>%)"] 8
+             , Run Date "%a %_d %b %Y %H:%M:%S" "date" 10
+             , Run StdinReader
+             ]
+, sepChar = "%"
+, alignSep = "}{"
+, template = "%StdinReader% | %coretemp% | %multicpu% | %memory% | %wlan0wi% %wlan0% }{ %battery% | %SBSP% | <fc=#ee9a00>%date%</fc>"
+}
