@@ -84,8 +84,7 @@ myKeysP = [ ("<XF86AudioMute>", spawn "amixer -q sset Master toggle")
 main = do
     xmproc <- spawnPipe myStatusBar
     xmonad $ def
-        { manageHook = manageDocks <+> myManageHook -- make sure to include myManageHook definition from above
-                        <+> manageHook def
+        { manageHook = manageDocks <+> myManageHook <+> manageHook def
         , layoutHook = avoidStruts  $  layoutHook def
         , workspaces = myWorkspaces
         , handleEventHook = handleEventHook def <+> docksEventHook <+> fullscreenEventHook
@@ -94,7 +93,7 @@ main = do
                         , ppTitle = xmobarColor "green" "" . shorten 50
                         }
         , terminal = "xfce4-terminal -e tmux"
-        , modMask = mod4Mask     -- Rebind Mod to the Windows key
+        , modMask = mod4Mask
         , startupHook = myStartupHook
         } `additionalKeys` myKeys
           `additionalKeysP` myKeysP
