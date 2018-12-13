@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 import XMonad
+import XMonad.Actions.CycleWS
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
@@ -56,6 +57,8 @@ myXPConfig = defaultXPConfig { font = "xft:inconsolata:size=11:antialias=true:hi
 myKeys = [ ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
          , ((mod4Mask .|. shiftMask, xK_k), spawn "onboard")
          , ((mod4Mask, xK_p), runOrRaisePrompt myXPConfig)
+         , ((mod4Mask .|. shiftMask, xK_o), shiftNextScreen)
+         , ((mod4Mask .|. mod1Mask, xK_o), swapNextScreen)
          , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
          , ((0, xK_Print), spawn "scrot")
          , ((mod4Mask, xK_n), passPrompt myXPConfig)
