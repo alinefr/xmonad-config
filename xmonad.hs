@@ -7,6 +7,7 @@ import XMonad.Hooks.SetWMName
 import XMonad.Layout.IndependentScreens
 import XMonad.Prompt
 import XMonad.Prompt.Pass
+import XMonad.Prompt.RunOrRaise
 import XMonad.Util.Cursor
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys, additionalKeysP)
@@ -61,7 +62,7 @@ myXPConfig = defaultXPConfig { font = "xft:inconsolata:size=11:antialias=true:hi
 
 myKeys = [ ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
          , ((mod4Mask .|. shiftMask, xK_k), spawn "onboard")
-         , ((mod4Mask, xK_p), spawn "dmenu_run")
+         , ((mod4Mask, xK_p), runOrRaisePrompt myXPConfig)
          , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
          , ((0, xK_Print), spawn "scrot")
          , ((mod4Mask, xK_n), passPrompt myXPConfig)
