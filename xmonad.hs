@@ -10,6 +10,7 @@ import XMonad.Prompt
 import XMonad.Prompt.Pass
 import XMonad.Prompt.RunOrRaise
 import XMonad.Util.Cursor
+import XMonad.Util.Paste
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys, additionalKeysP)
 import XMonad.Util.SpawnOnce
@@ -69,6 +70,7 @@ myKeys = [ ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
          , ((mod4Mask, xK_n), passPrompt myXPConfig)
          , ((mod4Mask .|. controlMask, xK_n), passGeneratePrompt myXPConfig)
          , ((mod4Mask .|. controlMask  .|. shiftMask, xK_n), passRemovePrompt myXPConfig)
+         , ((0, xK_Insert), pasteSelection)
          ]++
          [((m .|. mod4Mask, k), windows $ onCurrentScreen f i)
             | (i, k) <- zip (workspaces' def) [xK_1 .. xK_9]
