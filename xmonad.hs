@@ -70,7 +70,7 @@ myKeys = [ ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
          , ((mod4Mask .|. controlMask, xK_n), passGeneratePrompt myXPConfig)
          , ((mod4Mask .|. controlMask  .|. shiftMask, xK_n), passRemovePrompt myXPConfig)
          , ((0, xK_Insert), pasteSelection)
-         , ((0, 0x1008FF2A), spawn "dbus-send --system --print-reply --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Suspend boolean:true")
+         , ((0, 0x1008FF2A), confirmPrompt myXPConfig "Suspend" $ spawn "dbus-send --system --print-reply --dest=org.freedesktop.ConsoleKit /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Suspend boolean:true")
          ]++
          [((m .|. mod4Mask, k), windows $ onCurrentScreen f i)
             | (i, k) <- zip (workspaces' def) [xK_1 .. xK_9]
