@@ -14,17 +14,9 @@ import XMonad.Util.Paste
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys, additionalKeysP)
 import XMonad.Util.SpawnOnce
-import DBus
-import DBus.Client
 import System.IO
 import qualified XMonad.StackSet as W
 
-spotifyCtrl :: Client -> MemberName -> X ()
-spotifyCtrl client command = liftIO $ do
-  call_ client
-    (methodCall "/org/mpris/MediaPlayer2" "org.mpris.MediaPlayer2.Player" command) {
-      methodCallDestination = Just "org.mpris.MediaPlayer2.spotify" }
-  return ( )
 
 myManageHook = composeAll
     [ className =? "Gimp" --> doFloat
@@ -77,22 +69,18 @@ myKeys = [ ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
             | (i, k) <- zip (workspaces' def) [xK_1 .. xK_9]
             , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
 
-myKeysP dbusClient = [ ("<XF86AudioMute>", spawn "amixer -q sset Master toggle")
-                     , ("<XF86AudioRaiseVolume>", spawn "amixer -q sset Master 5+ unmute")
-                     , ("<XF86AudioLowerVolume>", spawn "amixer -q sset Master 5- unmute")
-                     , ("<XF86AudioPlay>", spotifyCtrl dbusClient "PlayPause")
-                     , ("<XF86AudioNext>", spotifyCtrl dbusClient "Next")
-                     , ("<XF86AudioPrev>", spotifyCtrl dbusClient "Previous")
-                     ]++
-                    [ (otherModMasks ++ "M-" ++ [key], action tag)
-                      | (tag, key)  <- zip myWorkspaces "123456789"
-                      , (otherModMasks, action) <- [ ("", windows . W.view) -- was W.greedyView
-                                                          , ("S-", windows . W.shift)]
-                    ]
+myKeysP = [ ("<XF86AudioMute>", spawn "amixer -q sset Master toggle")
+          , ("<XF86AudioLowerVolume>", spawn "amixer -q sset Master 5- unmute")
+          , ("<XF86AudioRaiseVolume>", spawn "amixer -q sset Master 5+ unmute")
+          ]++
+          [ (otherModMasks ++ "M-" ++ [key], action tag)
+            | (tag, key)  <- zip myWorkspaces "123456789"
+            , (otherModMasks, action) <- [ ("", windows . W.view) -- was W.greedyView
+                                                , ("S-", windows . W.shift)]
+          ]
 
 main = do
     xmproc <- spawnPipe myStatusBar
-    client <- connectSession
     xmonad $ def
         { manageHook = manageDocks <+> myManageHook -- make sure to include myManageHook definition from above
                         <+> manageHook def
@@ -107,4 +95,4 @@ main = do
         , modMask = mod4Mask     -- Rebind Mod to the Windows key
         , startupHook = myStartupHook
         } `additionalKeys` myKeys
-          `additionalKeysP` myKeysP client
+          `additionalKeysP` myKeysP
