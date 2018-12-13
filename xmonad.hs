@@ -24,8 +24,7 @@ myManageHook = composeAll
     , className =? "trayer" --> doIgnore
     ]
 
-myWorkspaces = withScreens 2 ["Term", "Web", "Files"]
--- myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 
 myStatusBar = "xmobar"
 
