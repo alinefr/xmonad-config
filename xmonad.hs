@@ -2,6 +2,7 @@
 
 import XMonad
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.SetWMName
 import XMonad.Layout.IndependentScreens
@@ -94,7 +95,7 @@ main = do
                         <+> manageHook def
         , layoutHook = avoidStruts  $  layoutHook def
         , workspaces = myWorkspaces
-        , handleEventHook = handleEventHook def <+> docksEventHook
+        , handleEventHook = handleEventHook def <+> docksEventHook <+> fullscreenEventHook
         , logHook = dynamicLogWithPP xmobarPP
                         { ppOutput = hPutStrLn xmproc
                         , ppTitle = xmobarColor "green" "" . shorten 50
