@@ -5,6 +5,8 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.SetWMName
 import XMonad.Layout.IndependentScreens
+import XMonad.Prompt
+import XMonad.Prompt.Pass
 import XMonad.Util.Cursor
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys, additionalKeysP)
@@ -46,12 +48,25 @@ myStartupHook = do
   spawn "xscreensaver -no-splash"
   spawn "slack"
 
+myXPConfig = defaultXPConfig { font = "xft:inconsolata:size=11:antialias=true:hinting=true:hintstyle=hintfull"
+                             , bgColor = "#171717"
+                             , fgColor = "#ff7701"
+                             , bgHLight = "#171717"
+                             , fgHLight = "#00aa4a"
+                             , promptBorderWidth = 0
+                             , height = 16
+                             , historySize = 512
+                             , historyFilter = deleteConsecutive
+                               }
 
 myKeys = [ ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
          , ((mod4Mask .|. shiftMask, xK_k), spawn "onboard")
          , ((mod4Mask, xK_p), spawn "dmenu_run")
          , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
          , ((0, xK_Print), spawn "scrot")
+         , ((mod4Mask, xK_n), passPrompt myXPConfig)
+         , ((mod4Mask .|. controlMask, xK_n), passGeneratePrompt myXPConfig)
+         , ((mod4Mask .|. controlMask  .|. shiftMask, xK_n), passRemovePrompt myXPConfig)
          ]++
          [((m .|. mod4Mask, k), windows $ onCurrentScreen f i)
             | (i, k) <- zip (workspaces' def) [xK_1 .. xK_9]
