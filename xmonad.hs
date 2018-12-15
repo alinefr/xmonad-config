@@ -25,7 +25,6 @@ quitXmonad = io exitSuccess
 
 myManageHook = composeAll
     [ className =? "Gimp" --> doFloat
-    , className =? "onboard" --> doIgnore
     , className =? "trayer" --> doIgnore
     ]
 
