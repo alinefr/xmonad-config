@@ -2,6 +2,7 @@
 
 import XMonad
 import XMonad.Actions.CycleWS
+import XMonad.Actions.CopyWindow
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
@@ -25,7 +26,10 @@ quitXmonad = io exitSuccess
 
 myManageHook = composeAll
     [ className =? "Gimp" --> doFloat
+    , className =? "Florence" --> doFloat
+    , className =? "Onboard" --> doFloat <+> doF copyToAll
     , className =? "trayer" --> doIgnore
+    , className =? "Tor Browser" --> doFloat
     ]
 
 myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
@@ -37,6 +41,7 @@ myStartupHook = do
   setWMName "LG3D"
   spawn "~/bin/check-hdmi.hs"
   setWMName "LG3D"
+  spawn "~/bin/check-hdmi.sh"
   spawn "trayer --edge top --align right --SetDockType true --expand true --width 10 --transparent true --tint 0x191970 --height 12 --SetPartialStrut true"
   spawn "xloadimage -onroot -fullscreen ~/Images/xmonad.jpg"
   spawn "dhcpcd-gtk"
@@ -63,6 +68,8 @@ myKeys = [ ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
          , ((mod4Mask, xK_p), runOrRaisePrompt myXPConfig)
          , ((mod4Mask .|. shiftMask, xK_o), shiftNextScreen)
          , ((mod4Mask .|. mod1Mask, xK_o), swapNextScreen)
+         , ((mod4Mask .|. shiftMask, xK_v), spawn "~/.xmonad/bin/rotate_desktop.sh left")
+         , ((mod4Mask .|. shiftMask, xK_h), spawn "~/.xmonad/bin/rotate_desktop.sh normal")
          , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
          , ((0, xK_Print), spawn "scrot")
          , ((mod4Mask .|. shiftMask, xK_q), confirmPrompt myXPConfig "Quit XMonad" $ io exitSuccess)
