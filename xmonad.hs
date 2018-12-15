@@ -46,16 +46,17 @@ myStartupHook = do
   spawn "xrandr --output HDMI-1 --mode 1920x1080 --output eDP-1 --mode 1366x768 --rate 60.11 --right-of HDMI-1"
   spawn "xscreensaver -no-splash"
 
-myXPConfig = defaultXPConfig { font = "xft:inconsolata:size=11:antialias=true:hinting=true:hintstyle=hintfull"
-                             , bgColor = "#171717"
-                             , fgColor = "#ff7701"
-                             , bgHLight = "#171717"
-                             , fgHLight = "#00aa4a"
-                             , promptBorderWidth = 0
-                             , height = 16
-                             , historySize = 512
-                             , historyFilter = deleteConsecutive
-                               }
+myXPConfig = defaultXPConfig {
+    font = "xft:inconsolata:size=11:antialias=true:hinting=true:hintstyle=hintfull"
+      , bgColor = "#171717"
+      , fgColor = "#ff7701"
+      , bgHLight = "#171717"
+      , fgHLight = "#00aa4a"
+      , promptBorderWidth = 0
+      , height = 16
+      , historySize = 512
+      , historyFilter = deleteConsecutive
+}
 
 myKeys = [ ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
          , ((mod4Mask .|. shiftMask, xK_k), spawn "onboard")
@@ -73,7 +74,8 @@ myKeys = [ ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
          ]++
          [((m .|. mod4Mask, k), windows $ onCurrentScreen f i)
             | (i, k) <- zip (workspaces' def) [xK_1 .. xK_9]
-            , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+            , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
+         ]
 
 myKeysP = [ ("<XF86AudioMute>", spawn "amixer -q sset Master toggle")
           , ("<XF86AudioLowerVolume>", spawn "amixer -q sset Master 5- unmute")
