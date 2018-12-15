@@ -36,6 +36,7 @@ myStartupHook = do
   setDefaultCursor xC_left_ptr
   setWMName "LG3D"
   spawn "~/bin/check-hdmi.hs"
+  setWMName "LG3D"
   spawn "trayer --edge top --align right --SetDockType true --expand true --width 10 --transparent true --tint 0x191970 --height 12 --SetPartialStrut true"
   spawn "xloadimage -onroot -fullscreen ~/Images/xmonad.jpg"
   spawn "dhcpcd-gtk"
