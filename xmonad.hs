@@ -50,6 +50,8 @@ myStartupHook = do
   spawn "start-pulseaudio-x11"
   spawn "xrandr --output HDMI-1 --mode 1920x1080 --output eDP-1 --mode 1366x768 --rate 60.11 --right-of HDMI-1"
   spawn "xscreensaver -no-splash"
+  spawn "nextcloud"
+  spawn "udiskie"
 
 myXPConfig = defaultXPConfig {
     font = "xft:inconsolata:size=11:antialias=true:hinting=true:hintstyle=hintfull"
